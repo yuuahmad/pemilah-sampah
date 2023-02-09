@@ -2,15 +2,6 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <ESP32Servo.h>
-
-/*************************************************************
-
-  This is a simple demo of sending and receiving some data.
-  Be sure to check out other examples!
- *************************************************************/
-
-// Template ID, Device Name and Auth Token are provided by the Blynk.Cloud
-// See the Device Info tab, or Template settings
 #define BLYNK_TEMPLATE_ID "TMPL-AFJqLwq"
 #define BLYNK_DEVICE_NAME "Quickstart Template"
 #define BLYNK_AUTH_TOKEN "qbthkIEuyzWbf2DsZPbkNVJC8_RM7bJb"
@@ -46,16 +37,11 @@ BLYNK_WRITE(V0)
   // Set incoming value from pin V0 to a variable
   int nilai_sudut_servo_blynk = param.asInt();
   nilai_sudut_servo = nilai_sudut_servo_blynk;
-
-  // Update state
-  // Blynk.virtualWrite(V1, nilai_sudut_servo);
 }
 
 // This function sends Arduino's uptime every second to Virtual Pin 2.
 void myTimerEvent()
 {
-  // You can send any value at any time.
-  // Please don't send more that 10 values per second.
   Blynk.virtualWrite(V2, millis() / 1000);
 }
 
@@ -69,11 +55,6 @@ void setup()
   Serial.begin(115200);
   servo_sensor.setPeriodHertz(50); // Standard 50hz servo
   Blynk.begin(auth, ssid, pass);
-  // You can also specify server:
-  // Blynk.begin(auth, ssid, pass, "blynk.cloud", 80);
-  // Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
-
-  // Setup a function to be called every second
   timer.setInterval(1000L, myTimerEvent);
 }
 
@@ -81,9 +62,6 @@ void loop()
 {
   Blynk.run();
   timer.run();
-  // You can inject your own code or combine it with other sketches.
-  // Check other examples on how to communicate with Blynk. Remember
-  // to avoid delay() function!
   servo_sensor.attach(servo_sensor_pin, minUs, maxUs);
 
   servo_sensor.write(nilai_sudut_servo);
